@@ -1,0 +1,23 @@
+connector:
+  name: configgit
+  identifier: configgit
+  description: ""
+  orgIdentifier: Org01
+  projectIdentifier: Org01_Proj01
+  type: Github
+  spec:
+    url: https://github.com/shreyadey16/
+    validationRepo: firstdrone
+    authentication:
+      type: Http
+      spec:
+        type: UsernameToken
+        spec:
+          username: shreyadey16
+          tokenRef: gitnew01
+    apiAccess:
+      type: Token
+      spec:
+        tokenRef: gitnew01
+    executeOnDelegate: false
+    type: Account
