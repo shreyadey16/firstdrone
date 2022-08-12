@@ -1,0 +1,59 @@
+pipeline:
+    name: org01_proj01_pipeline04
+    identifier: org01_proj01_pipeline04
+    projectIdentifier: Org01_Proj01
+    orgIdentifier: Org01
+    tags: {}
+    properties:
+        ci:
+            codebase:
+                connectorRef: pipeline_git01
+                repoName: firstdrone
+                build: <+input>
+    stages:
+        - stage:
+              name: build04
+              identifier: build04
+              description: ""
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  execution:
+                      steps:
+                          - step:
+                                type: BuildAndPushDockerRegistry
+                                name: buildpipe04
+                                identifier: buildpipe04
+                                spec:
+                                    connectorRef: dockerconnector
+                                    repo: shreyadey16/pipeline01
+                                    tags:
+                                        - latest3
+                  infrastructure:
+                      type: KubernetesHosted
+                      spec:
+                          identifier: k8s-hosted-infra
+        - stage:
+              name: endpipeline
+              identifier: endpipeline
+              description: ""
+              type: Custom
+              spec:
+                  execution:
+                      steps:
+                          - step:
+                                type: ShellScript
+                                name: endcheck
+                                identifier: endcheck
+                                spec:
+                                    shell: Bash
+                                    onDelegate: true
+                                    source:
+                                        type: Inline
+                                        spec:
+                                            script: echo 'end of the pipeline'
+                                    environmentVariables: []
+                                    outputVariables: []
+                                    executionTarget: {}
+                                timeout: 10m
+              tags: {}
