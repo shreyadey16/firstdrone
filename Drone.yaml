@@ -1,6 +1,6 @@
 #Drone CI File!
 #Commit Message: Drone! Captain Canary is here! 
-
+#newline
 kind: pipeline
 type: kubernetes
 name: default
