@@ -1,0 +1,47 @@
+pipeline:
+    name: org01_proj01_pipeline02
+    identifier: org01_proj01_pipeline02
+    projectIdentifier: Org01_Proj01
+    orgIdentifier: Org01
+    tags: {}
+    stages:
+        - stage:
+              name: build02
+              identifier: build02
+              description: ""
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  execution:
+                      steps:
+                          - step:
+                                type: BuildAndPushDockerRegistry
+                                name: buildpipe02
+                                identifier: buildpipe02
+                                spec:
+                                    connectorRef: dockerconnector
+                                    repo: shreyadey16/pipeline01
+                                    tags:
+                                        - latest1
+                  infrastructure:
+                      type: KubernetesHosted
+                      spec:
+                          identifier: k8s-hosted-infra
+    properties:
+        ci:
+            codebase:
+                connectorRef: pipeline_git01
+                repoName: firstdrone
+                build: <+input>
+    notificationRules:
+        - name: buildnotif
+          identifier: buildnotif
+          pipelineEvents:
+              - type: PipelineStart
+          notificationMethod:
+              type: Email
+              spec:
+                  userGroups: []
+                  recipients:
+                      - shreya.dey1629@gmail.com
+          enabled: true
