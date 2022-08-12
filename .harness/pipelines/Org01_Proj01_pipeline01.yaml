@@ -1,0 +1,58 @@
+pipeline:
+    name: Org01_Proj01_pipeline01
+    identifier: Org01_Proj01_pipeline01
+    projectIdentifier: Org01_Proj01
+    orgIdentifier: Org01
+    tags: {}
+    stages:
+        - stage:
+              name: Approval stage
+              identifier: Approval_stage
+              description: ""
+              type: Custom
+              spec:
+                  execution:
+                      steps:
+                          - step:
+                                type: HarnessApproval
+                                name: Approval1
+                                identifier: Approval1
+                                spec:
+                                    approvalMessage: Please review the following information and approve the pipeline progression
+                                    includePipelineExecutionHistory: true
+                                    approvers:
+                                        userGroups:
+                                            - account.harnessdemouser
+                                        minimumCount: 1
+                                        disallowPipelineExecutor: false
+                                    approverInputs: []
+                                timeout: 1d
+              tags: {}
+        - stage:
+              name: buildApprove
+              identifier: buildApprove
+              description: ""
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  execution:
+                      steps:
+                          - step:
+                                type: BuildAndPushDockerRegistry
+                                name: docker_pipe01
+                                identifier: docker_pipe01
+                                spec:
+                                    connectorRef: dockerconnector
+                                    repo: shreyadey16/pipeline01
+                                    tags:
+                                        - latest
+                  infrastructure:
+                      type: KubernetesHosted
+                      spec:
+                          identifier: k8s-hosted-infra
+    properties:
+        ci:
+            codebase:
+                connectorRef: pipeline_git01
+                repoName: firstdrone
+                build: <+input>
