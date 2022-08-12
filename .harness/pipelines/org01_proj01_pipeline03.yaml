@@ -1,0 +1,35 @@
+pipeline:
+    name: org01_proj01_pipeline03
+    identifier: org01_proj01_pipeline03
+    projectIdentifier: Org01_Proj01
+    orgIdentifier: Org01
+    tags: {}
+    properties:
+        ci:
+            codebase:
+                connectorRef: pipeline_git01
+                repoName: firstdrone
+                build: <+input>
+    stages:
+        - stage:
+              name: build03
+              identifier: build03
+              description: ""
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  execution:
+                      steps:
+                          - step:
+                                type: BuildAndPushDockerRegistry
+                                name: dockerbuild03
+                                identifier: dockerbuild03
+                                spec:
+                                    connectorRef: dockerconnector
+                                    repo: shreyadey16/pipeline01
+                                    tags:
+                                        - latest2
+                  infrastructure:
+                      type: KubernetesHosted
+                      spec:
+                          identifier: k8s-hosted-infra
