@@ -1,0 +1,35 @@
+pipeline:
+    name: sample-cicd
+    identifier: samplecicd
+    projectIdentifier: Org01_Proj01
+    orgIdentifier: Org01
+    tags: {}
+    properties:
+        ci:
+            codebase:
+                connectorRef: pipeline_git01
+                repoName: firstdrone
+                build: <+input>
+    stages:
+        - stage:
+              name: buildstage
+              identifier: buildstage
+              description: ""
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  execution:
+                      steps:
+                          - step:
+                                type: BuildAndPushDockerRegistry
+                                name: dockerImageForm
+                                identifier: dockerImageForm
+                                spec:
+                                    connectorRef: dockerconnector
+                                    repo: shreyadey16/sample-ci-cd-harness
+                                    tags:
+                                        - latest
+                  infrastructure:
+                      type: KubernetesHosted
+                      spec:
+                          identifier: k8s-hosted-infra
