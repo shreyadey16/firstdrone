@@ -46,7 +46,7 @@ pipeline:
                               variables: []
                               manifests:
                                   - manifest:
-                                        identifier: manifest01
+                                        identifier: manifest02
                                         type: K8sManifest
                                         spec:
                                             store:
@@ -55,9 +55,9 @@ pipeline:
                                                     connectorRef: configgit
                                                     gitFetchType: Branch
                                                     paths:
-                                                        - app-deploy.yaml
-                                                    repoName: firstdrone
-                                                    branch: master
+                                                        - " content/en/examples/application/nginx-app.yaml"
+                                                    repoName: website
+                                                    branch: main
                                             skipResourceVersioning: false
                           type: Kubernetes
                   infrastructure:
