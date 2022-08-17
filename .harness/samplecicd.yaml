@@ -57,7 +57,7 @@ pipeline:
                                                     paths:
                                                         - " content/en/examples/application/nginx-app.yaml"
                                                     repoName: firstdrone
-                                                    branch: main
+                                                    branch: master
                                             skipResourceVersioning: false
                           type: Kubernetes
                   infrastructure:
